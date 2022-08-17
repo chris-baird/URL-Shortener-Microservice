@@ -32,10 +32,11 @@ app.post('/api/shorturl', function (req, res) {
   console.log("sdsds" + isValid)
   // dns.lookup(url, (err, address, family) => {
   console.log(isValid)
+  console.log(url.includes("ftp"))
   // console.log(err)
-  // if (err) {
-  //   return res.json({ error: 'invalid url' })
-  // }
+  if (url.includes("ftp")) {
+    return res.json({ error: 'invalid url' })
+  }
   if (!isValid) {
     return res.json({ error: 'invalid url' })
   }
