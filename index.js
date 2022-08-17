@@ -9,6 +9,7 @@ const port = process.env.PORT || 3000;
 
 const urlMap = new Map()
 app.use(express.json())
+app.use(express.urlencoded({ extended: false }))
 app.use(cors());
 
 app.use('/public', express.static(`${process.cwd()}/public`));
@@ -23,7 +24,7 @@ app.get('/api/hello', function (req, res) {
 });
 
 app.post('/api/shorturl', function (req, res) {
-  // console.log(req.body)
+  console.log(req.body)
   let url = req.body.url
   let isValid = isUri(url)
 
