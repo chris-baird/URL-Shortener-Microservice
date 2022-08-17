@@ -27,29 +27,34 @@ app.get('/api/hello', function (req, res) {
 app.post('/api/shorturl', function (req, res) {
   // console.log(req.body)
   let url = req.body.url
-  // let isValid = isUri(url)
-  dns.lookup(url, (err, address, family) => {
-    if (err) {
-      return res.json({ error: 'invalid url' })
-    }
-
-    if (urlMap.has(url)) {
-      return res.json({
-        original_url: url,
-        short_url: urlMap.get(url)
-      })
-    } else {
-      urlMap.set(url, urlMap.size + 1)
-      return res.json({
-        original_url: url,
-        short_url: urlMap.get(url)
-      })
-    }
-  });
-
-  // if (!isValid) {
+  let isValid = isUri(url)
+  console.log()
+  console.log("sdsds" + isValid)
+  // dns.lookup(url, (err, address, family) => {
+  console.log(isValid)
+  // console.log(err)
+  // if (err) {
   //   return res.json({ error: 'invalid url' })
   // }
+  if (!isValid) {
+    return res.json({ error: 'invalid url' })
+  }
+
+  if (urlMap.has(url)) {
+    return res.json({
+      original_url: url,
+      short_url: urlMap.get(url)
+    })
+  } else {
+    urlMap.set(url, urlMap.size + 1)
+    return res.json({
+      original_url: url,
+      short_url: urlMap.get(url)
+    })
+  }
+  // });
+
+
 
 
 
@@ -59,7 +64,7 @@ app.get('/api/shorturl/:short', function (req, res) {
   let shortUrl = parseInt(req.params.short)
   let mapValues = [...urlMap.values()]
   // console.log(typeof shortUrl)
-  // console.log(shortUrl)
+  console.log(shortUrl)
   // console.log(mapValues)
   // console.log(mapValues.includes(shortUrl))
   console.log(urlMap)
@@ -69,6 +74,7 @@ app.get('/api/shorturl/:short', function (req, res) {
     for (const [key, value] of urlMap) {
       if (value === shortUrl) {
         url = key
+
       }
     }
     return res.redirect(url)
