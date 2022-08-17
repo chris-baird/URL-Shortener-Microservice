@@ -57,10 +57,7 @@ app.get('/api/shorturl/:short', function (req, res) {
         url = key
       }
     }
-    return res.json({
-      original_url: url,
-      short_url: urlMap.get(url)
-    })
+    return res.redirect(url)
   } else {
     return res.json({
       error: "No short URL found for the given input"
